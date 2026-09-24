@@ -1,0 +1,240 @@
+import { useState } from 'react'
+import { MapPin, Mail, Phone, Clock, CheckCircle } from 'lucide-react'
+import { Link } from 'react-router-dom'
+
+const details = [
+  {
+    icon: MapPin,
+    title: 'Registered Office',
+    content: (
+      <address className="not-italic font-sans text-sm text-warm leading-relaxed mt-1.5">
+        Office 1460, 60 Tottenham Court Road<br />
+        Fitzrovia, London, W1T 2EW<br />
+        United Kingdom
+      </address>
+    ),
+  },
+  {
+    icon: Mail,
+    title: 'Email',
+    content: (
+      <a href="mailto:info@meridioncrest.online" className="font-sans text-sm text-gold hover:underline mt-1.5 block">
+        info@meridioncrest.online
+      </a>
+    ),
+  },
+  {
+    icon: Phone,
+    title: 'Telephone',
+    content: (
+      <a href="tel:+447882732613" className="font-sans text-sm text-warm hover:text-cream transition-colors duration-200 mt-1.5 block">
+        +44 7882 732613
+      </a>
+    ),
+  },
+  {
+    icon: Clock,
+    title: 'Business Hours',
+    content: (
+      <p className="font-sans text-sm text-warm leading-relaxed mt-1.5">
+        Monday – Friday: 09:00 – 18:00 GMT<br />
+        Saturday: 10:00 – 14:00 GMT
+      </p>
+    ),
+  },
+]
+
+const subjects = [
+  'IT Consultancy Enquiry',
+  'Retail / Product Enquiry',
+  'Partnership Opportunity',
+  'Order Support',
+  'General Enquiry',
+  'Media / Press',
+]
+
+export default function Contact() {
+  const [form, setForm]           = useState({ name: '', email: '', company: '', subject: '', message: '' })
+  const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading]     = useState(false)
+
+  const set = field => e => setForm(p => ({ ...p, [field]: e.target.value }))
+
+  const handleSubmit = e => {
+    e.preventDefault()
+    setLoading(true)
+    setTimeout(() => { setLoading(false); setSubmitted(true) }, 800)
+  }
+
+  const inputClass = 'w-full bg-transparent border-0 border-b font-sans text-sm text-cream placeholder-muted/40 py-2.5 focus:outline-none transition-colors rounded-none'
+  const inputStyle = { borderBottomColor: '#E2E8F0' }
+  const inputFocusStyle = { borderBottomColor: '#1E3A8A' }
+
+  return (
+    <div className="bg-bg">
+
+      {/* Header */}
+      <section className="relative py-24 lg:py-32 overflow-hidden">
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold/[0.04] rounded-full blur-[80px] translate-y-1/3 -translate-x-1/3" />
+        </div>
+        <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
+          <span className="label mb-5 block">Contact</span>
+          <h1 className="font-serif font-light text-5xl lg:text-6xl text-cream mb-6">Get in Touch</h1>
+          <div className="w-10 h-px bg-gold mb-7" />
+          <p className="font-sans text-base text-warm leading-[1.8] max-w-xl">
+            Our London-based team is available for consultancy enquiries, retail support, and general correspondence.
+          </p>
+        </div>
+      </section>
+
+      <section className="bg-surface border-y border-line py-20 lg:py-28">
+        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="grid lg:grid-cols-5 gap-14 lg:gap-16">
+
+            {/* Info panel */}
+            <div className="lg:col-span-2">
+              <h2 className="font-serif font-light text-2xl text-cream mb-9">Contact Information</h2>
+              <div className="space-y-8">
+                {details.map(({ icon: Icon, title, content }) => (
+                  <div key={title} className="flex gap-4">
+                    <Icon size={14} className="text-gold flex-shrink-0 mt-1" />
+                    <div>
+                      <p className="font-sans text-[10px] font-semibold text-cream uppercase tracking-widest">{title}</p>
+                      {content}
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Notice */}
+              <div className="mt-10 p-5 bg-raised" style={{ borderLeft: '3px solid #1E3A8A' }}>
+                <p className="font-sans text-xs text-warm leading-relaxed">
+                  For business partnerships, IT consultancy scoping, or media enquiries, please include your company name and a brief description of your requirements.
+                </p>
+              </div>
+            </div>
+
+            {/* Form */}
+            <div className="lg:col-span-3">
+              {submitted ? (
+                <div className="text-center py-24">
+                  <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-6">
+                    <CheckCircle size={24} className="text-gold" />
+                  </div>
+                  <h3 className="font-serif font-light text-2xl text-cream mb-2">Message Received</h3>
+                  <p className="font-sans text-sm text-warm">We aim to respond within 1–2 business days.</p>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  <div className="grid sm:grid-cols-2 gap-8">
+                    <div>
+                      <label className="block font-sans text-[10px] font-semibold text-cream/70 uppercase tracking-widest mb-2.5">
+                        Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="Jane Smith"
+                        value={form.name}
+                        onChange={set('name')}
+                        className={inputClass}
+                        style={inputStyle}
+                        onFocus={e => e.target.style.borderBottomColor = '#1E3A8A'}
+                        onBlur={e => e.target.style.borderBottomColor = '#E2E8F0'}
+                      />
+                    </div>
+                    <div>
+                      <label className="block font-sans text-[10px] font-semibold text-cream/70 uppercase tracking-widest mb-2.5">
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="jane@company.com"
+                        value={form.email}
+                        onChange={set('email')}
+                        className={inputClass}
+                        style={inputStyle}
+                        onFocus={e => e.target.style.borderBottomColor = '#1E3A8A'}
+                        onBlur={e => e.target.style.borderBottomColor = '#E2E8F0'}
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block font-sans text-[10px] font-semibold text-cream/70 uppercase tracking-widest mb-2.5">
+                      Company
+                    </label>
+                    <input
+                      type="text"
+                      placeholder="Optional"
+                      value={form.company}
+                      onChange={set('company')}
+                      className={inputClass}
+                      style={inputStyle}
+                      onFocus={e => e.target.style.borderBottomColor = '#1E3A8A'}
+                      onBlur={e => e.target.style.borderBottomColor = '#E2E8F0'}
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block font-sans text-[10px] font-semibold text-cream/70 uppercase tracking-widest mb-2.5">
+                      Subject *
+                    </label>
+                    <select
+                      required
+                      value={form.subject}
+                      onChange={set('subject')}
+                      className={`${inputClass} cursor-pointer`}
+                      style={{ ...inputStyle, backgroundColor: 'transparent', color: form.subject ? '#0F172A' : 'rgba(100,116,139,0.6)' }}
+                      onFocus={e => e.target.style.borderBottomColor = '#1E3A8A'}
+                      onBlur={e => e.target.style.borderBottomColor = '#E2E8F0'}
+                    >
+                      <option value="" style={{ background: '#FFFFFF' }}>Select a subject</option>
+                      {subjects.map(s => (
+                        <option key={s} value={s} style={{ background: '#FFFFFF' }}>{s}</option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block font-sans text-[10px] font-semibold text-cream/70 uppercase tracking-widest mb-2.5">
+                      Message *
+                    </label>
+                    <textarea
+                      required
+                      rows={5}
+                      placeholder="Please describe your enquiry in detail…"
+                      value={form.message}
+                      onChange={set('message')}
+                      className={`${inputClass} resize-none`}
+                      style={inputStyle}
+                      onFocus={e => e.target.style.borderBottomColor = '#1E3A8A'}
+                      onBlur={e => e.target.style.borderBottomColor = '#E2E8F0'}
+                    />
+                  </div>
+
+                  <p className="font-sans text-xs text-muted">
+                    By submitting this form you agree to our{' '}
+                    <Link to="/privacy-policy" className="text-gold hover:underline">Privacy Policy</Link>.
+                  </p>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full py-3.5 bg-gold text-bg font-sans text-sm font-semibold tracking-wide hover:bg-gold-light active:bg-gold-dark transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {loading ? 'Sending…' : 'Send Message'}
+                  </button>
+                </form>
+              )}
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+    </div>
+  )
+}

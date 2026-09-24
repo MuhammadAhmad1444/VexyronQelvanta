@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html { scroll-behavior: smooth; }
+
+  body {
+    @apply bg-bg text-cream antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #F8FAFC; }
+  ::-webkit-scrollbar-thumb { background: #1E3A8A; border-radius: 3px; }
+  * { scrollbar-width: thin; scrollbar-color: #1E3A8A #F8FAFC; }
+
+  ::selection { background: rgba(30, 58, 138, 0.15); color: #0F172A; }
+}
+
+@layer components {
+  .label {
+    @apply font-sans text-[10px] font-semibold tracking-[0.28em] uppercase text-gold;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-7 py-3.5 bg-gold text-bg font-sans text-sm font-semibold tracking-wide hover:bg-gold-light active:bg-gold-dark transition-all duration-200;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-7 py-3.5 border border-gold/40 text-gold font-sans text-sm font-medium tracking-wide hover:border-gold transition-all duration-200;
+  }
+  .btn-outline:hover { background-color: rgba(30, 58, 138, 0.06); }
+  .btn-outline:active { background-color: rgba(30, 58, 138, 0.12); }
+
+  .btn-ghost {
+    @apply inline-flex items-center gap-2 text-gold font-sans text-sm font-medium hover:gap-3 transition-all duration-200;
+  }
+
+  .card-dark {
+    @apply bg-bg border border-line hover:border-gold/30 shadow-sm hover:shadow-md transition-all duration-300;
+  }
+
+  /* Gold hairline divider */
+  .gold-rule { @apply w-10 h-px bg-gold; }
+
+  /* Section header pattern */
+  .section-head { @apply text-center mb-14 lg:mb-18; }
+
+  /* Legal content */
+  .legal-content h2  { @apply font-serif font-light text-xl text-cream mt-10 mb-3 pb-2 border-b border-gold/20; }
+  .legal-content h3  { @apply font-sans text-sm font-semibold text-cream mt-6 mb-2; }
+  .legal-content p   { @apply font-sans text-warm text-sm leading-7 mb-4; }
+  .legal-content ul  { @apply list-disc ml-5 space-y-1.5 text-sm text-warm leading-7 mb-4; }
+  .legal-content ol  { @apply list-decimal ml-5 space-y-1.5 text-sm text-warm leading-7 mb-4; }
+  .legal-content a   { @apply text-gold hover:underline; }
+  .legal-content strong { @apply font-semibold text-cream; }
+  .legal-content .notice-box { @apply bg-raised border-l-4 border-gold p-5 text-sm text-cream mb-6; }
+}
+
+/* Entrance animations */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(22px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.97); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.anim-fade-up {
+  animation: fadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.anim-fade-in {
+  animation: fadeIn 0.6s ease both;
+}
+
+.anim-scale-in {
+  animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
