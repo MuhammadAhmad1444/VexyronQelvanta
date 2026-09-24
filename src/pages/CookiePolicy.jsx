@@ -1,10 +1,11 @@
 import LegalPage from '../components/LegalPage'
+import { COMPANY as C } from '../company'
 
 export default function CookiePolicy() {
   return (
-    <LegalPage title="Cookie Policy" lastUpdated="14 May 2026">
-      <div className="notice-box">
-        This Cookie Policy explains how <strong>Meridion Crest Ltd</strong> uses cookies and similar tracking
+    <LegalPage title="Cookie Policy">
+      <div className="notice">
+        This Cookie Policy explains how <strong>{C.name}</strong> uses cookies and similar tracking
         technologies on our website. You can manage your cookie preferences at any time using the banner
         displayed when you first visit the site, or by adjusting your browser settings.
       </div>
@@ -16,64 +17,41 @@ export default function CookiePolicy() {
         your visit — such as your preferences or the contents of a shopping basket.
       </p>
       <p>
-        Cookies set by the website owner (in this case, Meridion Crest Ltd) are called "first-party cookies".
+        Cookies set by the website owner (in this case, {C.name}) are called "first-party cookies".
         Cookies set by parties other than the website owner are called "third-party cookies".
       </p>
 
-      <h2>2. Categories of Cookies We Use</h2>
+      <h2>2. What This Website Uses</h2>
 
-      <h3>a) Strictly Necessary Cookies</h3>
+      <h3>a) Strictly necessary storage</h3>
       <p>
-        These cookies are essential for the website to function. They cannot be disabled in our systems.
-        They are usually set in response to actions you take, such as setting your privacy preferences,
-        logging in, or filling in forms.
+        This website keeps its use of cookies and similar technologies to a minimum. At present it stores
+        only one item in your browser, which is needed to remember your choice on the cookie banner:
       </p>
       <ul>
-        <li><strong>meridioncrest_cookie_consent</strong> — Stores your cookie consent preference (1 year)</li>
-        <li><strong>session_id</strong> — Manages your browsing session and shopping basket</li>
-        <li><strong>csrf_token</strong> — Protects against cross-site request forgery attacks</li>
+        <li><strong>{C.consentKey}</strong> (browser local storage) — records your cookie preference so the banner is not shown on every visit. It stays until you clear your browser data.</li>
       </ul>
-      <p>You cannot opt out of these cookies as they are required for the site to work properly.</p>
+      <p>You cannot opt out of this item, because the site needs it to respect your choice.</p>
 
-      <h3>b) Analytics &amp; Performance Cookies</h3>
+      <h3>b) Analytics, functional and marketing cookies</h3>
       <p>
-        These cookies help us understand how visitors interact with our website, which pages are visited
-        most frequently, and whether visitors encounter error messages. All information collected is
-        aggregated and therefore anonymous.
+        We do not currently use analytics, advertising or social-media tracking cookies. If we introduce any in
+        future, we will update this policy first and only set them after you have given consent through the
+        cookie banner.
       </p>
-      <ul>
-        <li><strong>Google Analytics (_ga, _gid, _gat)</strong> — Measures site usage and performance (2 years)</li>
-        <li><strong>Hotjar (hj*)</strong> — Generates heatmaps and session recordings (1 year)</li>
-      </ul>
-      <p>These cookies are only set with your consent.</p>
 
-      <h3>c) Functional Cookies</h3>
+      <h3>c) Fonts</h3>
       <p>
-        These cookies enable enhanced functionality and personalisation. They may be set by us or by third
-        parties whose services we have added to our pages.
+        This website loads its typefaces from Google Fonts. When a page loads, your browser connects to Google's
+        servers, which receive your IP address. Google Fonts does not set cookies. See{' '}
+        <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer">Google's Privacy Policy</a>.
       </p>
-      <ul>
-        <li><strong>Preferences cookie</strong> — Remembers your language and currency settings (1 year)</li>
-        <li><strong>Recently viewed</strong> — Stores recently viewed products for your convenience (30 days)</li>
-      </ul>
-      <p>These cookies are only set with your consent.</p>
-
-      <h3>d) Marketing &amp; Targeting Cookies</h3>
-      <p>
-        These cookies may be set through our website by advertising partners. They may be used to build a
-        profile of your interests and show you relevant adverts on other sites.
-      </p>
-      <ul>
-        <li><strong>Meta Pixel</strong> — Tracks conversions from social media advertising (90 days)</li>
-        <li><strong>Google Ads</strong> — Measures campaign effectiveness (90 days)</li>
-      </ul>
-      <p>These cookies are only set with your explicit consent.</p>
 
       <h2>3. How to Manage Cookies</h2>
       <h3>Via our cookie banner</h3>
       <p>
-        When you first visit our website, you will see a cookie consent banner. You can choose to accept all
-        cookies or accept essential cookies only. You can change your preferences at any time by clearing
+        When you first visit our website, you will see a cookie consent banner. You can choose to accept or to
+        allow essential storage only. You can change your preferences at any time by clearing
         your browser cookies and revisiting the site.
       </p>
       <h3>Via your browser settings</h3>
@@ -116,10 +94,10 @@ export default function CookiePolicy() {
       <h2>7. Contact Us</h2>
       <p>
         If you have any questions about our use of cookies, please contact us at{' '}
-        <a href="mailto:info@meridioncrest.online">info@meridioncrest.online</a> or write to:
+        <a href={`mailto:${C.email}`}>{C.email}</a> or write to:
       </p>
       <ul>
-        <li>Meridion Crest Ltd, Office 1460, 60 Tottenham Court Road, Fitzrovia, London, W1T 2EW</li>
+        <li>{C.name}, {C.address}</li>
       </ul>
     </LegalPage>
   )

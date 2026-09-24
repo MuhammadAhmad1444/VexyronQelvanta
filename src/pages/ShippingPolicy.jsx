@@ -1,49 +1,43 @@
 import LegalPage from '../components/LegalPage'
+import { COMPANY as C } from '../company'
 
 export default function ShippingPolicy() {
   return (
-    <LegalPage title="Shipping &amp; Delivery Policy" lastUpdated="14 May 2026">
-      <div className="notice-box">
+    <LegalPage title="Shipping &amp; Delivery Policy">
+      <div className="notice">
         All delivery times stated below are estimates and begin from the date your order is dispatched.
         Delivery during busy periods (e.g., Christmas, Bank Holidays) may take longer.
       </div>
 
       <h2>1. Order Processing</h2>
       <p>
-        Orders placed before <strong>14:00 GMT on a working day</strong> (Monday–Friday, excluding UK Bank
-        Holidays) will normally be processed and dispatched the same day. Orders placed after this time or
-        on weekends will be processed the next working day.
+        Physical orders are normally packed and dispatched within <strong>1–3 working days</strong> of payment
+        (Monday–Friday, excluding UK bank holidays). Digital products are sent by email, usually on the same
+        working day that payment is received.
       </p>
       <p>
-        You will receive an order confirmation email immediately after purchase, followed by a dispatch
+        You will receive an order confirmation email once payment has been received, followed by a dispatch
         confirmation email with tracking details once your order has been shipped.
       </p>
 
       <h2>2. UK Delivery Options</h2>
       <h3>Standard Delivery</h3>
       <ul>
-        <li><strong>Estimated delivery:</strong> 3–5 working days from dispatch</li>
+        <li><strong>Estimated delivery:</strong> 2–3 working days from dispatch</li>
         <li><strong>Cost:</strong> £3.99 (free on orders over £50.00)</li>
-        <li><strong>Carrier:</strong> Royal Mail 48 / DPD Standard</li>
+        <li><strong>Carrier:</strong> Royal Mail Tracked 48 or equivalent</li>
       </ul>
       <h3>Express Delivery</h3>
       <ul>
         <li><strong>Estimated delivery:</strong> 1–2 working days from dispatch</li>
-        <li><strong>Cost:</strong> £7.99</li>
-        <li><strong>Carrier:</strong> Royal Mail 24 / DPD Next Day</li>
-        <li><strong>Cut-off time:</strong> Orders must be placed before 14:00 GMT on a working day</li>
-      </ul>
-      <h3>Saturday Delivery</h3>
-      <ul>
-        <li><strong>Estimated delivery:</strong> Delivery on Saturday</li>
-        <li><strong>Cost:</strong> £12.99</li>
-        <li><strong>Cut-off time:</strong> Orders must be placed by 14:00 GMT on Friday</li>
+        <li><strong>Cost:</strong> £6.99</li>
+        <li><strong>Carrier:</strong> Royal Mail Tracked 24 or equivalent</li>
       </ul>
 
       <h2>3. International Delivery</h2>
       <p>
         We ship to selected international destinations. International shipping rates and estimated delivery
-        times are calculated at checkout based on destination and order weight.
+        times are quoted before you pay, based on destination and order weight.
       </p>
       <ul>
         <li><strong>Europe (EU &amp; non-EU):</strong> 5–10 working days</li>
@@ -66,7 +60,7 @@ export default function ShippingPolicy() {
       <h2>5. Delivery to Registered Addresses</h2>
       <p>
         We deliver to residential and business addresses. We also deliver to PO Boxes for Standard Delivery
-        via Royal Mail (Express and Saturday delivery options are not available to PO Boxes).
+        via Royal Mail (Express delivery is not available to PO Boxes).
       </p>
       <p>
         If no one is available to receive the parcel, the carrier will leave a card and either attempt
@@ -104,15 +98,15 @@ export default function ShippingPolicy() {
         It is your responsibility to provide a complete and accurate delivery address at the time of order.
         We cannot be held responsible for orders delivered to an incorrect address provided by the customer.
         If you notice an error in your delivery address immediately after placing an order, please contact
-        us as soon as possible at <a href="mailto:info@meridioncrest.online">info@meridioncrest.online</a> — we will
+        us as soon as possible at <a href={`mailto:${C.email}`}>{C.email}</a> — we will
         attempt to amend the address before dispatch, but this cannot be guaranteed.
       </p>
 
       <h2>9. Contact Us</h2>
       <p>
         For any shipping or delivery enquiries, please contact us at{' '}
-        <a href="mailto:info@meridioncrest.online">info@meridioncrest.online</a> or call{' '}
-        <a href="tel:+447882732613">+44 7882 732613</a>.
+        <a href={`mailto:${C.email}`}>{C.email}</a> or call{' '}
+        <a href={C.phoneHref}>{C.phone}</a>.
       </p>
     </LegalPage>
   )

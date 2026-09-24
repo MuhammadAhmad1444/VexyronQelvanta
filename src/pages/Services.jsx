@@ -1,168 +1,89 @@
 import { Link } from 'react-router-dom'
-import { ArrowRight, Code2, Server, BarChart3, Globe, ShoppingBag, Truck, CreditCard, CheckCircle } from 'lucide-react'
+import { ArrowRight, Check } from 'lucide-react'
+import PageHeader from '../components/PageHeader'
+import { services, process } from '../data'
 
-const itServices = [
-  {
-    icon: Code2, num: '01', title: 'Web Development & Architecture',
-    desc: 'Full-stack web applications built with modern frameworks. Performant, scalable systems meeting international compliance standards.',
-    features: ['React / Next.js / TypeScript', 'RESTful & GraphQL APIs', 'Cloud-native deployment (AWS / Azure / GCP)', 'Accessibility (WCAG 2.1 AA)'],
-  },
-  {
-    icon: Server, num: '02', title: 'Software Infrastructure Design',
-    desc: 'End-to-end infrastructure consulting covering cloud architecture, DevOps pipelines, database design, and system integration.',
-    features: ['Cloud Architecture & Migration', 'CI/CD Pipeline Implementation', 'Database Design & Optimisation', 'Security Architecture & Pen Testing'],
-  },
-  {
-    icon: BarChart3, num: '03', title: 'Digital Strategy & Transformation',
-    desc: 'Strategic advisory for businesses navigating digital transformation. Phased roadmaps aligned with business objectives and governance.',
-    features: ['Technology Audits & Gap Analysis', 'Digital Roadmap Planning', 'Vendor Selection & Management', 'Change Management Support'],
-  },
-  {
-    icon: Globe, num: '04', title: 'Technical Governance & Compliance',
-    desc: 'Aligning technology practices with UK and international regulatory requirements including GDPR, ISO 27001, and PCI DSS.',
-    features: ['GDPR Compliance Assessments', 'Data Protection Frameworks', 'ISO 27001 Preparation', 'PCI DSS Advisory'],
-  },
-]
-
-const retailServices = [
-  {
-    icon: ShoppingBag, title: 'Curated Product Catalogue',
-    desc: 'A carefully selected range of premium lifestyle goods, sourced from quality-assured suppliers and managed through our proprietary inventory system.',
-  },
-  {
-    icon: Truck, title: 'Integrated Logistics & Fulfilment',
-    desc: 'End-to-end order management from purchase to delivery, with real-time tracking and our 14-day consumer return guarantee.',
-  },
-  {
-    icon: CreditCard, title: 'Secure Payment Processing',
-    desc: 'PCI DSS-compliant processing supporting major card schemes and digital wallets, secured with 3D Secure authentication.',
-  },
+const engagements = [
+  { title: 'Fixed-scope project', desc: 'A defined deliverable with an agreed price and milestone payments. Best for new sites, apps and rebuilds.' },
+  { title: 'Monthly retainer',    desc: 'A set number of days each month for ongoing development, maintenance and support.' },
+  { title: 'Time & materials',    desc: 'Flexible, day-rate engagements for discovery, audits or work where the scope is still evolving.' },
 ]
 
 export default function Services() {
   return (
-    <div className="bg-bg">
+    <div>
+      <PageHeader eyebrow="Services" title="Design, engineering and support under one roof.">
+        We work with start-ups, small businesses and in-house teams who need a reliable technical partner,
+        whether for a single build or for the long term.
+      </PageHeader>
 
-      {/* Header */}
-      <section className="relative py-24 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold/[0.04] rounded-full blur-[100px] translate-x-1/3 -translate-y-1/3" />
-        </div>
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
-          <span className="label mb-5 block">Our Services</span>
-          <h1 className="font-serif font-light text-5xl lg:text-6xl text-cream mb-6 max-w-xl leading-tight">
-            Two Divisions.<br />One Standard.
-          </h1>
-          <div className="w-10 h-px bg-gold mb-7" />
-          <p className="font-sans text-base text-warm leading-[1.8] max-w-2xl">
-            Whether you're an enterprise client or a consumer, Meridion Crest operates to the same high standard across both divisions.
-          </p>
-        </div>
-      </section>
-
-      {/* IT Consultancy */}
-      <section className="bg-surface border-y border-line py-24 lg:py-32" id="it-consultancy">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-
-          <div className="flex items-start gap-4 mb-6">
-            <div className="w-px self-stretch bg-gold/40" />
-            <div>
-              <span className="label mb-1 block">Division A</span>
-              <h2 className="font-serif font-light text-3xl lg:text-4xl text-cream">IT Consultancy</h2>
-            </div>
-          </div>
-
-          <p className="font-sans text-sm text-warm leading-[1.9] max-w-2xl mb-14 ml-5">
-            Our enterprise technology division provides international clients the technical expertise to build, scale, and govern complex digital systems. We operate as a strategic partner — embedded in your technology decision-making.
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-4">
-            {itServices.map(({ icon: Icon, num, title, desc, features }) => (
-              <div
-                key={title}
-                className="relative bg-bg border border-line hover:border-gold/20 p-8 overflow-hidden group transition-all duration-300"
-              >
-                <span className="absolute top-4 right-6 font-serif font-light text-[80px] text-cream/[0.04] leading-none select-none">
-                  {num}
+      <section className="py-20 lg:py-28">
+        <div className="wrap space-y-4">
+          {services.map(({ id, icon: Icon, title, summary, points }, i) => (
+            <div key={id} id={id} className="card scroll-mt-28 grid gap-8 p-7 lg:grid-cols-[auto_1fr_1fr] lg:gap-12 lg:p-10">
+              <div className="flex items-center gap-4 lg:flex-col lg:items-start">
+                <span className="font-mono text-sm text-muted">0{i + 1}</span>
+                <span className="flex h-12 w-12 items-center justify-center rounded-xl border border-line bg-raised text-accent-light">
+                  <Icon size={22} />
                 </span>
-                <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-gold/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                <Icon size={14} className="text-gold mb-6" />
-                <h3 className="font-serif font-light text-xl text-cream mb-3">{title}</h3>
-                <p className="font-sans text-sm text-warm leading-[1.8] mb-6">{desc}</p>
-                <ul className="space-y-2">
-                  {features.map(f => (
-                    <li key={f} className="flex items-center gap-2.5 font-sans text-[13px] text-warm">
-                      <CheckCircle size={11} className="text-gold flex-shrink-0" />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Retail */}
-      <section className="py-24 lg:py-32" id="retail">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-
-          <div className="flex items-start gap-4 mb-6">
-            <div className="w-px self-stretch bg-gold/40" />
-            <div>
-              <span className="label mb-1 block">Division B</span>
-              <h2 className="font-serif font-light text-3xl lg:text-4xl text-cream">Direct-to-Consumer Retail</h2>
-            </div>
-          </div>
-
-          <p className="font-sans text-sm text-warm leading-[1.9] max-w-2xl mb-14 ml-5">
-            Our retail division operates a curated online store powered entirely by our proprietary infrastructure. Every product quality-assessed, every transaction PCI DSS secured, every order fulfilled through our integrated logistics network.
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-4 mb-8">
-            {retailServices.map(({ icon: Icon, title, desc }) => (
-              <div key={title} className="bg-surface border border-line hover:border-gold/20 p-7 transition-all duration-300 group">
-                <Icon size={14} className="text-gold mb-5" />
-                <h3 className="font-serif font-light text-lg text-cream mb-3">{title}</h3>
-                <p className="font-sans text-sm text-warm leading-[1.8]">{desc}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Launch banner */}
-          <div className="relative bg-raised border border-gold/15 p-8 lg:p-10 overflow-hidden">
-            <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-1/2 right-0 -translate-y-1/2 w-64 h-64 bg-gold/[0.06] rounded-full blur-3xl" />
-            </div>
-            <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
               <div>
-                <span className="label mb-3 block">Launching Autumn 2026</span>
-                <h3 className="font-serif italic font-light text-2xl text-cream mb-2">Full Catalogue Coming Soon</h3>
-                <p className="font-sans text-sm text-warm max-w-lg leading-relaxed">
-                  Browse our current inventory or register your interest for priority access and exclusive launch offers.
-                </p>
+                <h2 className="font-display text-2xl font-semibold text-text">{title}</h2>
+                <p className="mt-3 leading-relaxed text-soft">{summary}</p>
               </div>
-              <Link to="/shop" className="flex-shrink-0 btn-primary">
-                Browse Inventory <ArrowRight size={15} />
-              </Link>
+              <ul className="space-y-3">
+                {points.map(p => (
+                  <li key={p} className="flex gap-3 text-sm text-soft">
+                    <Check size={16} className="mt-0.5 shrink-0 text-cyan" />{p}
+                  </li>
+                ))}
+              </ul>
             </div>
+          ))}
+        </div>
+      </section>
+
+      <section className="border-y border-line bg-panel/50 py-20 lg:py-28">
+        <div className="wrap">
+          <p className="eyebrow mb-4">Ways to work together</p>
+          <h2 className="h-display max-w-2xl text-3xl sm:text-4xl">Engagement models</h2>
+          <div className="mt-12 grid gap-4 md:grid-cols-3">
+            {engagements.map(e => (
+              <div key={e.title} className="card p-7">
+                <h3 className="font-display text-lg font-semibold text-text">{e.title}</h3>
+                <p className="mt-3 text-sm leading-relaxed text-muted">{e.desc}</p>
+              </div>
+            ))}
           </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="bg-surface border-t border-line py-16">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12 text-center">
-          <h3 className="font-serif font-light text-2xl text-cream mb-3">Interested in our consultancy services?</h3>
-          <p className="font-sans text-sm text-warm mb-8">
-            Let's discuss how Meridion Crest's enterprise technology expertise can benefit your organisation.
+          <p className="mt-8 text-sm text-muted">
+            Every engagement starts with a written proposal and a statement of work. Prices are quoted in GBP.
           </p>
-          <Link to="/contact" className="btn-primary">
-            Enquire Now <ArrowRight size={15} />
-          </Link>
         </div>
       </section>
 
+      <section className="py-20 lg:py-28">
+        <div className="wrap grid gap-12 lg:grid-cols-2">
+          <div>
+            <p className="eyebrow mb-4">Process</p>
+            <h2 className="h-display text-3xl sm:text-4xl">What happens after you get in touch</h2>
+            <p className="mt-5 max-w-md leading-relaxed text-soft">
+              We keep things simple and transparent. You always know what is being worked on, what it costs and what comes next.
+            </p>
+            <Link to="/contact" className="btn-primary mt-9">Request a proposal <ArrowRight size={16} /></Link>
+          </div>
+          <ol className="space-y-4">
+            {process.map(s => (
+              <li key={s.step} className="card flex gap-5 p-6">
+                <span className="font-mono text-sm text-accent-light">{s.step}</span>
+                <div>
+                  <h3 className="font-display font-semibold text-text">{s.title}</h3>
+                  <p className="mt-1.5 text-sm leading-relaxed text-muted">{s.desc}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
     </div>
   )
 }

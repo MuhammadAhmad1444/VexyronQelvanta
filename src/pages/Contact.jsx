@@ -1,240 +1,108 @@
 import { useState } from 'react'
-import { MapPin, Mail, Phone, Clock, CheckCircle } from 'lucide-react'
-import { Link } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
+import { MapPin, Mail, Phone, Clock, Send } from 'lucide-react'
+import PageHeader from '../components/PageHeader'
+import { COMPANY } from '../company'
 
-const details = [
-  {
-    icon: MapPin,
-    title: 'Registered Office',
-    content: (
-      <address className="not-italic font-sans text-sm text-warm leading-relaxed mt-1.5">
-        Office 1460, 60 Tottenham Court Road<br />
-        Fitzrovia, London, W1T 2EW<br />
-        United Kingdom
-      </address>
-    ),
-  },
-  {
-    icon: Mail,
-    title: 'Email',
-    content: (
-      <a href="mailto:info@meridioncrest.online" className="font-sans text-sm text-gold hover:underline mt-1.5 block">
-        info@meridioncrest.online
-      </a>
-    ),
-  },
-  {
-    icon: Phone,
-    title: 'Telephone',
-    content: (
-      <a href="tel:+447882732613" className="font-sans text-sm text-warm hover:text-cream transition-colors duration-200 mt-1.5 block">
-        +44 7882 732613
-      </a>
-    ),
-  },
-  {
-    icon: Clock,
-    title: 'Business Hours',
-    content: (
-      <p className="font-sans text-sm text-warm leading-relaxed mt-1.5">
-        Monday – Friday: 09:00 – 18:00 GMT<br />
-        Saturday: 10:00 – 14:00 GMT
-      </p>
-    ),
-  },
-]
-
-const subjects = [
-  'IT Consultancy Enquiry',
-  'Retail / Product Enquiry',
-  'Partnership Opportunity',
-  'Order Support',
-  'General Enquiry',
-  'Media / Press',
-]
+const subjects = ['New project', 'Maintenance & support', 'Order enquiry', 'Existing order', 'Partnership', 'General enquiry']
 
 export default function Contact() {
-  const [form, setForm]           = useState({ name: '', email: '', company: '', subject: '', message: '' })
-  const [submitted, setSubmitted] = useState(false)
-  const [loading, setLoading]     = useState(false)
+  const [params] = useSearchParams()
+  const item = params.get('item')
+  const [form, setForm] = useState({
+    name: '', email: '', company: '',
+    subject: subjects.includes(params.get('subject')) ? params.get('subject') : '',
+    message: item ? `I would like to order: ${item}\nQuantity: 1\nDelivery postcode: ` : '',
+  })
+  const [opened, setOpened] = useState(false)
 
-  const set = field => e => setForm(p => ({ ...p, [field]: e.target.value }))
+  const set = field => e => setForm(f => ({ ...f, [field]: e.target.value }))
 
+  // No backend: compose the enquiry in the visitor's own email app.
   const handleSubmit = e => {
     e.preventDefault()
-    setLoading(true)
-    setTimeout(() => { setLoading(false); setSubmitted(true) }, 800)
+    const body = [
+      `Name: ${form.name}`,
+      `Email: ${form.email}`,
+      form.company && `Company: ${form.company}`,
+      '',
+      form.message,
+    ].filter(v => v !== false && v !== '').join('\n')
+    window.location.href = `mailto:${COMPANY.email}?subject=${encodeURIComponent(`${form.subject} — ${form.name}`)}&body=${encodeURIComponent(body)}`
+    setOpened(true)
   }
 
-  const inputClass = 'w-full bg-transparent border-0 border-b font-sans text-sm text-cream placeholder-muted/40 py-2.5 focus:outline-none transition-colors rounded-none'
-  const inputStyle = { borderBottomColor: '#E2E8F0' }
-  const inputFocusStyle = { borderBottomColor: '#1E3A8A' }
+  const details = [
+    { icon: MapPin, title: 'Office',    body: COMPANY.addressLines.map(l => <span key={l} className="block">{l}</span>) },
+    { icon: Mail,   title: 'Email',     body: <a href={`mailto:${COMPANY.email}`} className="text-accent-light hover:underline">{COMPANY.email}</a> },
+    { icon: Phone,  title: 'Telephone', body: <a href={COMPANY.phoneHref} className="hover:text-text">{COMPANY.phone}</a> },
+    { icon: Clock,  title: 'Hours',     body: COMPANY.hours.map(l => <span key={l} className="block">{l}</span>) },
+  ]
 
   return (
-    <div className="bg-bg">
+    <div>
+      <PageHeader eyebrow="Contact" title="Let's talk about your project.">
+        Send us a short description of what you need. We reply to every enquiry within one working day.
+      </PageHeader>
 
-      {/* Header */}
-      <section className="relative py-24 lg:py-32 overflow-hidden">
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-gold/[0.04] rounded-full blur-[80px] translate-y-1/3 -translate-x-1/3" />
-        </div>
-        <div className="relative max-w-7xl mx-auto px-6 lg:px-12">
-          <span className="label mb-5 block">Contact</span>
-          <h1 className="font-serif font-light text-5xl lg:text-6xl text-cream mb-6">Get in Touch</h1>
-          <div className="w-10 h-px bg-gold mb-7" />
-          <p className="font-sans text-base text-warm leading-[1.8] max-w-xl">
-            Our London-based team is available for consultancy enquiries, retail support, and general correspondence.
-          </p>
-        </div>
-      </section>
-
-      <section className="bg-surface border-y border-line py-20 lg:py-28">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
-          <div className="grid lg:grid-cols-5 gap-14 lg:gap-16">
-
-            {/* Info panel */}
-            <div className="lg:col-span-2">
-              <h2 className="font-serif font-light text-2xl text-cream mb-9">Contact Information</h2>
-              <div className="space-y-8">
-                {details.map(({ icon: Icon, title, content }) => (
-                  <div key={title} className="flex gap-4">
-                    <Icon size={14} className="text-gold flex-shrink-0 mt-1" />
-                    <div>
-                      <p className="font-sans text-[10px] font-semibold text-cream uppercase tracking-widest">{title}</p>
-                      {content}
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Notice */}
-              <div className="mt-10 p-5 bg-raised" style={{ borderLeft: '3px solid #1E3A8A' }}>
-                <p className="font-sans text-xs text-warm leading-relaxed">
-                  For business partnerships, IT consultancy scoping, or media enquiries, please include your company name and a brief description of your requirements.
-                </p>
-              </div>
-            </div>
-
-            {/* Form */}
-            <div className="lg:col-span-3">
-              {submitted ? (
-                <div className="text-center py-24">
-                  <div className="w-12 h-12 rounded-full bg-gold/10 flex items-center justify-center mx-auto mb-6">
-                    <CheckCircle size={24} className="text-gold" />
-                  </div>
-                  <h3 className="font-serif font-light text-2xl text-cream mb-2">Message Received</h3>
-                  <p className="font-sans text-sm text-warm">We aim to respond within 1–2 business days.</p>
+      <section className="py-20 lg:py-28">
+        <div className="wrap grid gap-10 lg:grid-cols-[1fr_1.5fr]">
+          <div className="space-y-4">
+            {details.map(({ icon: Icon, title, body }) => (
+              <div key={title} className="card flex gap-4 p-6">
+                <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg border border-line bg-raised text-accent-light">
+                  <Icon size={18} />
+                </span>
+                <div>
+                  <p className="font-mono text-[11px] uppercase tracking-[0.14em] text-muted">{title}</p>
+                  <div className="mt-1.5 text-sm leading-relaxed text-soft">{body}</div>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className="space-y-8">
-                  <div className="grid sm:grid-cols-2 gap-8">
-                    <div>
-                      <label className="block font-sans text-[10px] font-semibold text-cream/70 uppercase tracking-widest mb-2.5">
-                        Full Name *
-                      </label>
-                      <input
-                        type="text"
-                        required
-                        placeholder="Jane Smith"
-                        value={form.name}
-                        onChange={set('name')}
-                        className={inputClass}
-                        style={inputStyle}
-                        onFocus={e => e.target.style.borderBottomColor = '#1E3A8A'}
-                        onBlur={e => e.target.style.borderBottomColor = '#E2E8F0'}
-                      />
-                    </div>
-                    <div>
-                      <label className="block font-sans text-[10px] font-semibold text-cream/70 uppercase tracking-widest mb-2.5">
-                        Email Address *
-                      </label>
-                      <input
-                        type="email"
-                        required
-                        placeholder="jane@company.com"
-                        value={form.email}
-                        onChange={set('email')}
-                        className={inputClass}
-                        style={inputStyle}
-                        onFocus={e => e.target.style.borderBottomColor = '#1E3A8A'}
-                        onBlur={e => e.target.style.borderBottomColor = '#E2E8F0'}
-                      />
-                    </div>
-                  </div>
-
-                  <div>
-                    <label className="block font-sans text-[10px] font-semibold text-cream/70 uppercase tracking-widest mb-2.5">
-                      Company
-                    </label>
-                    <input
-                      type="text"
-                      placeholder="Optional"
-                      value={form.company}
-                      onChange={set('company')}
-                      className={inputClass}
-                      style={inputStyle}
-                      onFocus={e => e.target.style.borderBottomColor = '#1E3A8A'}
-                      onBlur={e => e.target.style.borderBottomColor = '#E2E8F0'}
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block font-sans text-[10px] font-semibold text-cream/70 uppercase tracking-widest mb-2.5">
-                      Subject *
-                    </label>
-                    <select
-                      required
-                      value={form.subject}
-                      onChange={set('subject')}
-                      className={`${inputClass} cursor-pointer`}
-                      style={{ ...inputStyle, backgroundColor: 'transparent', color: form.subject ? '#0F172A' : 'rgba(100,116,139,0.6)' }}
-                      onFocus={e => e.target.style.borderBottomColor = '#1E3A8A'}
-                      onBlur={e => e.target.style.borderBottomColor = '#E2E8F0'}
-                    >
-                      <option value="" style={{ background: '#FFFFFF' }}>Select a subject</option>
-                      {subjects.map(s => (
-                        <option key={s} value={s} style={{ background: '#FFFFFF' }}>{s}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block font-sans text-[10px] font-semibold text-cream/70 uppercase tracking-widest mb-2.5">
-                      Message *
-                    </label>
-                    <textarea
-                      required
-                      rows={5}
-                      placeholder="Please describe your enquiry in detail…"
-                      value={form.message}
-                      onChange={set('message')}
-                      className={`${inputClass} resize-none`}
-                      style={inputStyle}
-                      onFocus={e => e.target.style.borderBottomColor = '#1E3A8A'}
-                      onBlur={e => e.target.style.borderBottomColor = '#E2E8F0'}
-                    />
-                  </div>
-
-                  <p className="font-sans text-xs text-muted">
-                    By submitting this form you agree to our{' '}
-                    <Link to="/privacy-policy" className="text-gold hover:underline">Privacy Policy</Link>.
-                  </p>
-
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className="w-full py-3.5 bg-gold text-bg font-sans text-sm font-semibold tracking-wide hover:bg-gold-light active:bg-gold-dark transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
-                  >
-                    {loading ? 'Sending…' : 'Send Message'}
-                  </button>
-                </form>
-              )}
-            </div>
-
+              </div>
+            ))}
           </div>
+
+          <form onSubmit={handleSubmit} className="card space-y-6 p-7 lg:p-10">
+            <div className="grid gap-6 sm:grid-cols-2">
+              <div>
+                <label htmlFor="name" className="field-label">Full name *</label>
+                <input id="name" required value={form.name} onChange={set('name')} className="field" placeholder="Jane Smith" autoComplete="name" />
+              </div>
+              <div>
+                <label htmlFor="email" className="field-label">Email *</label>
+                <input id="email" type="email" required value={form.email} onChange={set('email')} className="field" placeholder="jane@company.co.uk" autoComplete="email" />
+              </div>
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2">
+              <div>
+                <label htmlFor="company" className="field-label">Company</label>
+                <input id="company" value={form.company} onChange={set('company')} className="field" placeholder="Optional" autoComplete="organization" />
+              </div>
+              <div>
+                <label htmlFor="subject" className="field-label">Subject *</label>
+                <select id="subject" required value={form.subject} onChange={set('subject')} className="field">
+                  <option value="">Select a subject</option>
+                  {subjects.map(s => <option key={s} value={s}>{s}</option>)}
+                </select>
+              </div>
+            </div>
+            <div>
+              <label htmlFor="message" className="field-label">Message *</label>
+              <textarea id="message" required rows={6} value={form.message} onChange={set('message')} className="field resize-y" placeholder="What are you looking to build, and by when?" />
+            </div>
+            <p className="text-xs leading-relaxed text-muted">
+              Submitting opens your email app with this message addressed to {COMPANY.email}. See our{' '}
+              <Link to="/privacy-policy" className="text-accent-light hover:underline">Privacy Policy</Link>.
+            </p>
+            <button type="submit" className="btn-primary w-full">Send enquiry <Send size={15} /></button>
+            {opened && (
+              <p role="status" className="rounded-lg border border-cyan/30 bg-cyan/[0.06] p-4 text-sm text-soft">
+                Your email app should now be open with the message ready to send. If nothing happened, email us
+                directly at <a href={`mailto:${COMPANY.email}`} className="text-accent-light hover:underline">{COMPANY.email}</a>.
+              </p>
+            )}
+          </form>
         </div>
       </section>
-
     </div>
   )
 }

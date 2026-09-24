@@ -4,84 +4,45 @@
 
 @layer base {
   html { scroll-behavior: smooth; }
-
-  body {
-    @apply bg-bg text-cream antialiased;
-    font-family: 'Inter', system-ui, sans-serif;
-  }
-
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: #F8FAFC; }
-  ::-webkit-scrollbar-thumb { background: #1E3A8A; border-radius: 3px; }
-  * { scrollbar-width: thin; scrollbar-color: #1E3A8A #F8FAFC; }
-
-  ::selection { background: rgba(30, 58, 138, 0.15); color: #0F172A; }
+  body { @apply bg-ink text-text font-sans antialiased; }
+  ::selection { background: rgba(139, 108, 255, 0.35); color: #fff; }
+  * { scrollbar-width: thin; scrollbar-color: #1E2636 #07090F; }
+  :focus-visible { outline: 2px solid #8B6CFF; outline-offset: 3px; }
 }
 
 @layer components {
-  .label {
-    @apply font-sans text-[10px] font-semibold tracking-[0.28em] uppercase text-gold;
+  .wrap { @apply max-w-site mx-auto px-5 sm:px-8; }
+  .eyebrow { @apply font-mono text-[11px] tracking-[0.18em] uppercase text-cyan; }
+  .h-display { @apply font-display font-semibold tracking-tight text-text; }
+
+  .btn { @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-sm font-medium transition-all duration-200; }
+  .btn-primary { @apply btn bg-accent text-white hover:bg-accent-light shadow-[0_8px_30px_-8px_rgba(139,108,255,0.6)]; }
+  .btn-ghost { @apply btn border border-line text-soft hover:text-text hover:border-muted bg-white/[0.02]; }
+  .link-arrow { @apply inline-flex items-center gap-1.5 text-sm font-medium text-accent-light hover:gap-2.5 transition-all; }
+
+  .card { @apply rounded-2xl border border-line bg-panel/80 transition-colors duration-300 hover:border-accent/40; }
+  .chip { @apply inline-flex items-center gap-1.5 rounded-full border border-line bg-raised px-3 py-1 font-mono text-[11px] text-soft; }
+
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 56px 56px;
   }
 
-  .btn-primary {
-    @apply inline-flex items-center gap-2 px-7 py-3.5 bg-gold text-bg font-sans text-sm font-semibold tracking-wide hover:bg-gold-light active:bg-gold-dark transition-all duration-200;
-  }
-
-  .btn-outline {
-    @apply inline-flex items-center gap-2 px-7 py-3.5 border border-gold/40 text-gold font-sans text-sm font-medium tracking-wide hover:border-gold transition-all duration-200;
-  }
-  .btn-outline:hover { background-color: rgba(30, 58, 138, 0.06); }
-  .btn-outline:active { background-color: rgba(30, 58, 138, 0.12); }
-
-  .btn-ghost {
-    @apply inline-flex items-center gap-2 text-gold font-sans text-sm font-medium hover:gap-3 transition-all duration-200;
-  }
-
-  .card-dark {
-    @apply bg-bg border border-line hover:border-gold/30 shadow-sm hover:shadow-md transition-all duration-300;
-  }
-
-  /* Gold hairline divider */
-  .gold-rule { @apply w-10 h-px bg-gold; }
-
-  /* Section header pattern */
-  .section-head { @apply text-center mb-14 lg:mb-18; }
+  .field { @apply w-full rounded-lg border border-line bg-ink px-4 py-3 text-sm text-text placeholder-muted/60 focus:border-accent focus:outline-none transition-colors; }
+  .field-label { @apply block font-mono text-[11px] uppercase tracking-[0.14em] text-muted mb-2; }
 
   /* Legal content */
-  .legal-content h2  { @apply font-serif font-light text-xl text-cream mt-10 mb-3 pb-2 border-b border-gold/20; }
-  .legal-content h3  { @apply font-sans text-sm font-semibold text-cream mt-6 mb-2; }
-  .legal-content p   { @apply font-sans text-warm text-sm leading-7 mb-4; }
-  .legal-content ul  { @apply list-disc ml-5 space-y-1.5 text-sm text-warm leading-7 mb-4; }
-  .legal-content ol  { @apply list-decimal ml-5 space-y-1.5 text-sm text-warm leading-7 mb-4; }
-  .legal-content a   { @apply text-gold hover:underline; }
-  .legal-content strong { @apply font-semibold text-cream; }
-  .legal-content .notice-box { @apply bg-raised border-l-4 border-gold p-5 text-sm text-cream mb-6; }
+  .legal h2 { @apply font-display text-xl font-semibold text-text mt-12 mb-4 pb-3 border-b border-line; }
+  .legal h3 { @apply font-display text-base font-semibold text-text mt-7 mb-2; }
+  .legal p  { @apply text-soft text-[15px] leading-7 mb-4; }
+  .legal ul { @apply list-disc pl-5 space-y-2 text-[15px] text-soft leading-7 mb-4 marker:text-accent; }
+  .legal a  { @apply text-accent-light underline-offset-4 hover:underline; }
+  .legal strong { @apply font-semibold text-text; }
+  .legal .notice { @apply rounded-xl border border-accent/30 bg-accent/[0.07] p-5 text-[15px] leading-7 text-soft mb-8; }
 }
 
-/* Entrance animations */
-@keyframes fadeUp {
-  from { opacity: 0; transform: translateY(22px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@keyframes scaleIn {
-  from { opacity: 0; transform: scale(0.97); }
-  to   { opacity: 1; transform: scale(1); }
-}
-
-.anim-fade-up {
-  animation: fadeUp 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
-
-.anim-fade-in {
-  animation: fadeIn 0.6s ease both;
-}
-
-.anim-scale-in {
-  animation: scaleIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
-}
+@keyframes rise { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+.rise { animation: rise 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@media (prefers-reduced-motion: reduce) { .rise { animation: none; } html { scroll-behavior: auto; } }

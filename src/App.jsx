@@ -24,9 +24,9 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="min-h-screen flex flex-col bg-bg">
+      <div className="min-h-screen flex flex-col bg-ink">
         <Navbar />
-        <main className="flex-1 pt-16 lg:pt-20">
+        <main className="flex-1 pt-16 lg:pt-[72px]">
           <Routes>
             <Route path="/"                 element={<Home />} />
             <Route path="/about"            element={<About />} />
