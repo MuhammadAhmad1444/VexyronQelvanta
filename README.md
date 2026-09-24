@@ -5,7 +5,7 @@ React + Vite + Tailwind site. Company details live in `src/company.js`; products
 ```bash
 npm install
 npm run dev     # local dev server
-npm run build   # writes index.html + assets/ to the repo root
+npm run build   # outputs the deployable site to dist/
 ```
 
-The repo root is the deployable site (Apache `.htaccess` included for client-side routing).
+Deploy with the host's default Vite settings (build command `npm run build`, output directory `dist`). `dist/` includes an Apache `.htaccess` for client-side routing.
